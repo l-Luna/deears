@@ -1,0 +1,8 @@
+/.idea/
+
+/target
+/engine/target
+/engine/Cargo.lock
+
+# provide this yourself
+./song.ogg
