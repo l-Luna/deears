@@ -5,7 +5,7 @@ pub struct Noise;
 
 impl Producer for Noise {
 
-    fn amplitude(&mut self, _: usize, _: u8) -> f64 {
+    fn amplitude(&mut self, _: u64, _: u8) -> f64 {
         random()
     }
 

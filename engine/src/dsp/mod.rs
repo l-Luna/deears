@@ -4,13 +4,13 @@ pub mod noise;
 
 #[derive(Copy, Clone, Debug)]
 pub struct Attributes {
-    pub sample_rate: usize,
-    pub channels: usize
+    pub sample_rate: u64,
+    pub channels: u64
 }
 
 pub trait Producer: Send{
 
-    fn amplitude(&mut self, sample: usize, channel: u8) -> f64;
+    fn amplitude(&mut self, sample: u64, channel: u8) -> f64;
 
     fn attributes(&self) -> Attributes;
 }

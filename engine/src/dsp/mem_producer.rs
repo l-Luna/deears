@@ -15,8 +15,8 @@ pub struct MemProducer {
 }
 
 impl Producer for MemProducer {
-    fn amplitude(&mut self, sample: usize, channel: u8) -> f64 {
-        self.samples[sample * self.attributes.channels + channel as usize]
+    fn amplitude(&mut self, sample: u64, channel: u8) -> f64 {
+        self.samples[(sample * self.attributes.channels + channel as u64) as usize]
     }
 
     fn attributes(&self) -> Attributes {
@@ -39,8 +39,8 @@ pub fn from_ogg_file(path: &Path) -> Option<impl Producer> {
     return Some(MemProducer {
         samples: music,
         attributes: Attributes {
-            sample_rate: ogg_reader.ident_hdr.audio_sample_rate as usize,
-            channels: ogg_reader.ident_hdr.audio_channels as usize
+            sample_rate: ogg_reader.ident_hdr.audio_sample_rate as u64,
+            channels: ogg_reader.ident_hdr.audio_channels as u64
         }
     });
 }
