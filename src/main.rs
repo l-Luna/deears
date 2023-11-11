@@ -1,10 +1,9 @@
 use std::{
     path::Path,
-    fs::File,
     thread::sleep,
     time::Duration
 };
-use cpal::{StreamError, Sample, traits::{DeviceTrait, HostTrait, StreamTrait}, StreamConfig, SampleRate};
+use cpal::{StreamError, Sample, traits::{DeviceTrait, HostTrait, StreamTrait}, StreamConfig};
 use deears::dsp::Producer;
 
 fn main() {

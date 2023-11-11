@@ -1,8 +1,12 @@
-use std::fs::File;
-use std::path::Path;
-use std::io::{Read, Seek};
-use lewton::inside_ogg::OggStreamReader;
-use lewton::samples::{InterleavedSamples, Sample};
+use std::{
+    path::Path,
+    fs::File,
+    io::{Read, Seek}
+};
+use lewton::{
+    inside_ogg::OggStreamReader,
+    samples::{InterleavedSamples, Sample}
+};
 use crate::dsp::Producer;
 
 pub struct MemProducer {
