@@ -1,5 +1,6 @@
 pub mod mem_producer;
 pub mod rate_adjuster;
+pub mod noise;
 
 #[derive(Copy, Clone, Debug)]
 pub struct Attributes {

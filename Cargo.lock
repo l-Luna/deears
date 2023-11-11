@@ -203,6 +203,7 @@ name = "deears"
 version = "0.1.0"
 dependencies = [
  "lewton",
+ "rand",
 ]
 
 [[package]]
