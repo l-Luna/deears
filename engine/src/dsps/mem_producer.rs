@@ -7,7 +7,7 @@ use crate::dsp::Producer;
 
 pub struct MemProducer {
     samples: Vec<f64>,
-    sample_rate: u32
+    sample_rate: usize
 }
 
 impl Producer for MemProducer {
@@ -16,7 +16,7 @@ impl Producer for MemProducer {
         self.samples[sample]
     }
 
-    fn sample_rate(&self) -> u32 {
+    fn sample_rate(&self) -> usize {
         self.sample_rate
     }
 }
@@ -33,7 +33,7 @@ pub fn from_ogg_file(path: &Path) -> Option<impl Producer>{
         }
     }
 
-    return Some(MemProducer{samples: music, sample_rate: ogg_reader.ident_hdr.audio_sample_rate});
+    return Some(MemProducer{samples: music, sample_rate: ogg_reader.ident_hdr.audio_sample_rate as usize});
 }
 
 pub fn read_dec_packet_itl<T: Read + Seek, S: Sample>(s: &mut OggStreamReader<T>) -> Result<Option<Vec<S>>, lewton::VorbisError> {

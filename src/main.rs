@@ -28,7 +28,7 @@ fn main() {
 
     let mut uu = deears::dsps::rate_adjuster::RateAdjuster{
         underlying: Box::new(u),
-        target_rate: config.sample_rate.0
+        target_rate: config.sample_rate.0 as usize
     };
 
     let mut counter = 0;
@@ -37,7 +37,6 @@ fn main() {
     let stream = device.build_output_stream(
         &config,
         move |data: &mut [f32], _info: &cpal::OutputCallbackInfo| {
-            println!("{}", data.len());
             for sample in data.iter_mut() {
                 *sample = f32::from_sample(uu.amplitude(counter));
                 counter += 1;
