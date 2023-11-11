@@ -1,7 +1,7 @@
-use crate::dsp::Producer;
+use super::{Producer, AnyProducer};
 
 pub struct RateAdjuster{
-    pub underlying: Box<dyn Producer + Send>,
+    pub underlying: AnyProducer,
     pub target_rate: usize
 }
 
@@ -16,8 +16,8 @@ impl Producer for RateAdjuster {
         } else {
             let base = secs * ur;
             let frac = (off as f64 / self.sample_rate() as f64) * ur as f64;
-            let (hiS, loS, d) = (base + frac.ceil() as usize, base + frac.floor() as usize, frac % 1f64);
-            return d * self.underlying.amplitude(hiS) + (1f64 - d) * self.underlying.amplitude(loS);
+            let (hi_s, lo_s, d) = (base + frac.ceil() as usize, base + frac.floor() as usize, frac % 1f64);
+            return d * self.underlying.amplitude(hi_s) + (1f64 - d) * self.underlying.amplitude(lo_s);
         }
     }
 

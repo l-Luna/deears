@@ -7,25 +7,14 @@ use cpal::{StreamError, Sample, traits::{DeviceTrait, HostTrait, StreamTrait}, S
 use deears::dsp::Producer;
 
 fn main() {
-    // file loading
-    //let path: File = File::open(Path::new("./song.ogg")).expect("provide a song!");
-
-    // ogg parsing
-    //let mut ogg_stream = OggStreamReader::new(path).expect("make it readable!");
-    //let sample_rate = ogg_stream.ident_hdr.audio_sample_rate;
-    // let's load it all into memory (that's a good idea!)
-    // let mut music: Vec<i16> = Vec::new();
-    // while let Some(channels) = ogg_stream.read_dec_packet_itl().unwrap() {
-    //     music.extend(channels);
-    // }
-    let u = deears::dsps::mem_producer::from_ogg_file(Path::new("./song.ogg")).unwrap();
+    let u = deears::dsp::mem_producer::from_ogg_file(Path::new("./song.ogg")).unwrap();
 
     println!("Sample rate: {}", u.sample_rate());
 
     let device = cpal::default_host().default_output_device().expect("have an audio device");
     let config: StreamConfig = device.default_output_config().unwrap().config();
 
-    let mut uu = deears::dsps::rate_adjuster::RateAdjuster{
+    let mut uu = deears::dsp::rate_adjuster::RateAdjuster{
         underlying: Box::new(u),
         target_rate: config.sample_rate.0 as usize
     };

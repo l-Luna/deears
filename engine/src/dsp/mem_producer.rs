@@ -7,7 +7,7 @@ use lewton::{
     inside_ogg::OggStreamReader,
     samples::{InterleavedSamples, Sample}
 };
-use crate::dsp::Producer;
+use super::{Producer};
 
 pub struct MemProducer {
     samples: Vec<f64>,
