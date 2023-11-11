@@ -1,31 +1,30 @@
 use std::{
     path::Path,
     fs::File,
-    io::{Read, Seek}
+    io::{Read, Seek},
 };
 use lewton::{
     inside_ogg::OggStreamReader,
-    samples::{InterleavedSamples, Sample}
+    samples::{InterleavedSamples, Sample},
 };
-use super::{Producer};
+use super::{Attributes, Producer};
 
 pub struct MemProducer {
     samples: Vec<f64>,
-    sample_rate: usize
+    attributes: Attributes,
 }
 
 impl Producer for MemProducer {
-
-    fn amplitude(&mut self, sample: usize) -> f64 {
-        self.samples[sample]
+    fn amplitude(&mut self, sample: usize, channel: u8) -> f64 {
+        self.samples[sample * self.attributes.channels + channel as usize]
     }
 
-    fn sample_rate(&self) -> usize {
-        self.sample_rate
+    fn attributes(&self) -> Attributes {
+        self.attributes
     }
 }
 
-pub fn from_ogg_file(path: &Path) -> Option<impl Producer>{
+pub fn from_ogg_file(path: &Path) -> Option<impl Producer> {
     let Ok(file) = File::open(path) else { return None; };
     let Ok(mut ogg_reader) = lewton::inside_ogg::OggStreamReader::new(file) else { return None; };
 
@@ -37,7 +36,13 @@ pub fn from_ogg_file(path: &Path) -> Option<impl Producer>{
         }
     }
 
-    return Some(MemProducer{samples: music, sample_rate: ogg_reader.ident_hdr.audio_sample_rate as usize});
+    return Some(MemProducer {
+        samples: music,
+        attributes: Attributes {
+            sample_rate: ogg_reader.ident_hdr.audio_sample_rate as usize,
+            channels: ogg_reader.ident_hdr.audio_channels as usize
+        }
+    });
 }
 
 pub fn read_dec_packet_itl<T: Read + Seek, S: Sample>(s: &mut OggStreamReader<T>) -> Result<Option<Vec<S>>, lewton::VorbisError> {
