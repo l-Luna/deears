@@ -14,9 +14,6 @@ impl Sine{
 impl Producer for Sine{
 
     fn amplitude(&mut self, time: u64, _: u8) -> f64{
-        //let (secs, sms) = (time / self.rate, time % self.rate);
-        /*std::f64::consts::PI;*/
-
         ((time as f64) * std::f64::consts::PI * 2f64 * (self.frequency / self.rate as f64)).sin()
     }
 
