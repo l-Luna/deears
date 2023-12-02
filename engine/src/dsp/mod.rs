@@ -1,6 +1,9 @@
 pub mod mem_producer;
 pub mod rate_adjuster;
 pub mod noise;
+pub mod lowpass_filter;
+pub mod sine;
+mod buffered;
 
 #[derive(Copy, Clone, Debug)]
 pub struct Attributes {
