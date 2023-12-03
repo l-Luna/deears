@@ -3,6 +3,7 @@ pub mod rate_adjuster;
 pub mod noise;
 pub mod lowpass_filter;
 pub mod sine;
+pub mod sum;
 mod buffered;
 
 #[derive(Copy, Clone, Debug)]
